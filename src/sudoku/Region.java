@@ -1,9 +1,7 @@
 package sudoku;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
+import java.util.stream.IntStream;
 
 public class Region implements Iterable{
     private int[][] cells;
@@ -30,10 +28,6 @@ public class Region implements Iterable{
         return cells;
     }
 
-    public void setCells(int[][] cells) {
-        this.cells = cells;
-    }
-
     public int[] getPossibleValues() {
         return possibleValues;
     }
@@ -41,10 +35,11 @@ public class Region implements Iterable{
     public int get(int x, int y) {
         return this.cells[x][y];
     }
-    public void set(int x, int y, int val) {
-        /*if () {
-            this.cells[x][y]
-        }*/
+
+    public void set(int x, int y, int val) throws IllegalArgumentException {
+        if (IntStream.of(possibleValues).noneMatch(i -> i == x))
+            throw new IllegalArgumentException("Value must be between 0-9, given : " + val);
+        this.cells[x][y] = val;
     }
 
     public void fill() {
@@ -60,8 +55,23 @@ public class Region implements Iterable{
         cells[x][y] = rnd;
     }
 
+    public boolean isOnLine (int line, int number) {
+        for (int j = 0; j < 3; j++)
+            if (cells[line][j] == number)
+                return true;
+        return false;
+    }
+
+    public boolean isOnColumn(int line, int number)
+    {
+        for (int i=0; i < 9; i++)
+            if (cells[i][line] == number)
+                return true;
+        return false;
+    }
+
     @Override
-    public Iterator iterator() {
-        return null;
+    public Iterator<int[]> iterator() {
+        return Arrays.stream(cells).iterator();
     }
 }
