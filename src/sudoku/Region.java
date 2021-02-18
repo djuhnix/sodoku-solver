@@ -55,18 +55,28 @@ public class Region implements Iterable{
         cells[x][y] = rnd;
     }
 
-    public boolean isOnLine (int line, int number) {
+    public boolean isOnLine (int line, int number)
+    {
         for (int j = 0; j < 3; j++)
             if (cells[line][j] == number)
                 return true;
         return false;
     }
 
-    public boolean isOnColumn(int line, int number)
+    public boolean isOnColumn(int column, int number)
     {
-        for (int i=0; i < 9; i++)
-            if (cells[i][line] == number)
+        for (int i=0; i < 3; i++)
+            if (cells[i][column] == number)
                 return true;
+        return false;
+    }
+
+    public boolean isOnBloc(int number)
+    {
+        for (int[] line : cells)
+            for(int k : line)
+                if (k == number)
+                    return true;
         return false;
     }
 

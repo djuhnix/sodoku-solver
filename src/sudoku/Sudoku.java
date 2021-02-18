@@ -33,9 +33,14 @@ public class Sudoku {
 
     public boolean isOnColumn(int line, int number)
     {
-        for (int i=0; i < 9; i++)
+        for (int i=0; i < 3; i++)
             if (regions[i][line].isOnColumn(line, number))
                 return true;
         return false;
+    }
+
+    public boolean isOnBloc(int i, int j, int number)
+    {
+        return regions[i][j].isOnBloc(number);
     }
 }
